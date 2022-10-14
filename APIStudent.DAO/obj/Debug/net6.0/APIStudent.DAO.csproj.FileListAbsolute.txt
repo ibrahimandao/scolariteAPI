@@ -1,0 +1,17 @@
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\bin\Debug\net6.0\APIStudent.DAO.deps.json
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\bin\Debug\net6.0\APIStudent.DAO.runtimeconfig.json
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\bin\Debug\net6.0\APIStudent.DAO.dll
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\bin\Debug\net6.0\APIStudent.DAO.pdb
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\bin\Debug\net6.0\APIStudent.Model.dll
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\bin\Debug\net6.0\APIStudent.Model.pdb
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.csproj.AssemblyReference.cache
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.AssemblyInfoInputs.cache
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.AssemblyInfo.cs
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.csproj.CoreCompileInputs.cache
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.csproj.CopyComplete
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.dll
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\refint\APIStudent.DAO.dll
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.pdb
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\APIStudent.DAO.genruntimeconfig.cache
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.DAO\obj\Debug\net6.0\ref\APIStudent.DAO.dll

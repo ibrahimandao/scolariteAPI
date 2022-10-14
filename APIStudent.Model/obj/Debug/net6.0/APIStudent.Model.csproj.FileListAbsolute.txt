@@ -1,0 +1,12 @@
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\bin\Debug\net6.0\APIStudent.Model.deps.json
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\bin\Debug\net6.0\APIStudent.Model.dll
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\bin\Debug\net6.0\APIStudent.Model.pdb
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\APIStudent.Model.csproj.AssemblyReference.cache
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\APIStudent.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\APIStudent.Model.AssemblyInfoInputs.cache
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\APIStudent.Model.AssemblyInfo.cs
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\APIStudent.Model.csproj.CoreCompileInputs.cache
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\APIStudent.Model.dll
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\refint\APIStudent.Model.dll
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\APIStudent.Model.pdb
+C:\Users\IBRAHIMA.NDAO\source\repos\StudentAPI\APIStudent.Model\obj\Debug\net6.0\ref\APIStudent.Model.dll
