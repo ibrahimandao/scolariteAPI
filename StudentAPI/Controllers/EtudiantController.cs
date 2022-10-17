@@ -19,8 +19,7 @@ namespace StudentAPI.Controllers
             _studentService = studentService;
             _formationService = formationService;
             _logger = logger;
-
-         }
+        }
 
         [Route("add")]
         [HttpPost]
@@ -54,8 +53,6 @@ namespace StudentAPI.Controllers
             try
             {
                 _logger.LogInformation("appel méthode");
-
-
                 var etudiant =   _studentService.Find(matricule);
                 return etudiant == null ? NotFound() : Ok(etudiant) ;
             }
@@ -63,7 +60,6 @@ namespace StudentAPI.Controllers
             {
 
             }
-
             return NotFound();
         }
 
@@ -77,8 +73,6 @@ namespace StudentAPI.Controllers
             try
             {
                 _logger.LogInformation("appel méthode");
-
-
                 var etudiants = _studentService.GetList();
                 return etudiants == null ? NotFound() : Ok(etudiants);
             }
