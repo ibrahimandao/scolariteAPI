@@ -8,28 +8,24 @@
 
 
 # Build results
-StudentAPI/bin/
-StudentAPI/obj/
-APIStudent.Model/bin/
-APIStudent.Model/obj/
-APIStudent.DAO/bin/
-APIStudent.DAO/obj/
+StudentAPI/[Bb]in/
+StudentAPI/[Oo]bj/
+APIStudent.Model/[Bb]in/
+APIStudent.Model/[Oo]bj/
+APIStudent.DAO/[Bb]in/
+APIStudent.DAO/[Oo]bj/
 x64/
 x86/
 bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
+StudentAPI/[Bb]in/
+StudentAPI/[Oo]bj/
 
 # Visual Studio 2015 cache/options directory
 .vs/
 .vscode/
 
 
-# Build Results of an ATL Project
-[Dd]ebug/
-[Rr]elease/
-dlldata.c
+
 
 
 
