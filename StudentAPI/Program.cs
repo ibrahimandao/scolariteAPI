@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 XmlConfigurator.Configure(new FileInfo("log4net.config"));
 
+builder.Logging.AddLog4Net();
 // Add services to the container.
 
 builder.Services.AddControllers();
