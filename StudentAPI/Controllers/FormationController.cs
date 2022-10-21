@@ -59,5 +59,27 @@ namespace StudentAPI.Controllers
 
             return formation == null ? NotFound() : Ok(formation);
         }
+
+        [Route("delete/{formationId}")]
+        [HttpDelete]
+        [ProducesResponseType(typeof(Formation), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Formation), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Formation), StatusCodes.Status500InternalServerError)]
+        public IActionResult SupprimerFormation(int formationId)
+        {
+            try
+            {
+                _logger.LogInformation("suppression d'une formation");
+
+                _formationService.Delete(formationId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Erreur lors de la suppression d'une formation" + e.Message);
+            }
+
+            return BadRequest();
+        }
     }
 }
