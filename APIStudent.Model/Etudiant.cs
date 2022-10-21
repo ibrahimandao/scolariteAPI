@@ -26,5 +26,7 @@ namespace APIStudent.Model
 
         [Required]
         public Formation Formation { get; set; }
+
+        public int? FormationId { get; set; }
     }
 }

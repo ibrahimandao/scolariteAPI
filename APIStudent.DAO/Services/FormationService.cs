@@ -24,5 +24,17 @@ namespace APIStudent.DAO.Services
         {
             return _context.Formations.ToList();
         }
+
+        public int Delete(int formationId)
+        {
+            var formation = GetFormationById(formationId);
+            if(formation != null)
+            {
+                _context.Remove(formation);
+                return _context.SaveChanges();
+            }
+
+            return -1;
+        }
     }
 }

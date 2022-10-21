@@ -19,8 +19,7 @@ namespace StudentAPI.Controllers
             _studentService = studentService;
             _formationService = formationService;
             _logger = logger;
-
-         }
+        }
 
         [Route("add")]
         [HttpPost]
@@ -32,8 +31,19 @@ namespace StudentAPI.Controllers
             try
             {
                 _logger.LogInformation("appel méthode");
+                
+                if (etudiant.FormationId.HasValue && etudiant.FormationId.Value>0)
+                {
+                    var formation = _formationService.GetFormationById(etudiant.FormationId.Value);
+                    if (formation == null)
+                        _formationService.Add(etudiant.Formation);
+                    else
+                        etudiant.Formation = formation;
+                }
+                else
+                  _formationService.Add(etudiant.Formation);
 
-                _formationService.Add(etudiant.Formation);
+
                 _studentService.Add(etudiant);
                 return Ok();
             }
@@ -54,8 +64,6 @@ namespace StudentAPI.Controllers
             try
             {
                 _logger.LogInformation("appel méthode");
-
-
                 var etudiant =   _studentService.Find(matricule);
                 return etudiant == null ? NotFound() : Ok(etudiant) ;
             }
@@ -63,7 +71,6 @@ namespace StudentAPI.Controllers
             {
 
             }
-
             return NotFound();
         }
 
@@ -77,8 +84,6 @@ namespace StudentAPI.Controllers
             try
             {
                 _logger.LogInformation("appel méthode");
-
-
                 var etudiants = _studentService.GetList();
                 return etudiants == null ? NotFound() : Ok(etudiants);
             }

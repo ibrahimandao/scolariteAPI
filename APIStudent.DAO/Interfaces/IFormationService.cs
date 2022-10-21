@@ -9,5 +9,7 @@ namespace APIStudent.DAO.Interfaces
         public Formation? GetFormationById(int id);
 
         public IEnumerable<Formation> GetFormations();
+
+        public int Delete(int formationId);
     }
 }
