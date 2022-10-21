@@ -31,8 +31,19 @@ namespace StudentAPI.Controllers
             try
             {
                 _logger.LogInformation("appel méthode");
+                
+                if (etudiant.FormationId.HasValue && etudiant.FormationId.Value>0)
+                {
+                    var formation = _formationService.GetFormationById(etudiant.FormationId.Value);
+                    if (formation == null)
+                        _formationService.Add(etudiant.Formation);
+                    else
+                        etudiant.Formation = formation;
+                }
+                else
+                  _formationService.Add(etudiant.Formation);
 
-                _formationService.Add(etudiant.Formation);
+
                 _studentService.Add(etudiant);
                 return Ok();
             }

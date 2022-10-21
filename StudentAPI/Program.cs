@@ -21,7 +21,7 @@ builder.Services.AddTransient<IFormationService, FormationService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
-    build.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+    build.WithOrigins("http://localhost:4200", "http://localhost:59931").AllowAnyMethod().AllowAnyHeader();
 }));
 
 var app = builder.Build();
