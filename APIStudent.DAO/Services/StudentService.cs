@@ -25,9 +25,25 @@ namespace APIStudent.DAO.Services
             
         }
 
-        public void Update(Etudiant etu)
+        public void Update(int id,Etudiant etudiant)
         {
-            throw new NotImplementedException();
+            var etu = _context.Etudiants.Find(id);
+            if(etu != null)
+            {
+                etu.Name = etudiant.Name;
+                etu.Firstname = etudiant.Firstname;
+                etu.Phone = etudiant.Phone;
+                etu.City = etudiant.City;
+                etu.Email = etudiant.Email;
+                etu.Matricule = etudiant.Matricule;
+                etu.FormationId = etudiant.FormationId;
+
+                _context.Entry(etu).State = EntityState.Modified;
+
+                _context.SaveChanges();
+
+            }
+             
         }
 
         public IEnumerable<Etudiant> GetList()
