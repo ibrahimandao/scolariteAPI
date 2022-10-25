@@ -6,8 +6,10 @@ namespace APIStudent.DAO.Interfaces
     {
         public void Add(Etudiant etu);
 
-        public void Update(Etudiant etu);
+        public void Update(int id,Etudiant etudiant);
         public Etudiant? Find(string matricule);
+
+        public Etudiant? FindById(int id);
         public IEnumerable<Etudiant> GetList();
     }
 }

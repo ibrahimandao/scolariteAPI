@@ -11,5 +11,7 @@ namespace APIStudent.DAO.Interfaces
         public IEnumerable<Formation> GetFormations();
 
         public int Delete(int formationId);
+
+        public void Update(int id, Formation formation);
     }
 }

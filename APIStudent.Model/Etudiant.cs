@@ -5,8 +5,7 @@ namespace APIStudent.Model
 {
     public class Etudiant
     {
-
-        [JsonIgnore]
+        
         public int Id { get; set; }
 
         [Required]

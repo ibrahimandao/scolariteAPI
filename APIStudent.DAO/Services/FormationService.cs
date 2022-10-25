@@ -1,6 +1,7 @@
 ﻿using APIStudent.DAO.Data;
 using APIStudent.DAO.Interfaces;
 using APIStudent.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIStudent.DAO.Services
 {
@@ -35,6 +36,21 @@ namespace APIStudent.DAO.Services
             }
 
             return -1;
+        }
+
+
+        public void Update(int id, Formation formation)
+        {
+            var form = _context.Formations.Find(id);
+            if(form != null)
+            {
+                form.Libelle = formation.Libelle;
+                form.Niveau = formation.Niveau;
+
+                _context.Entry(form).State = EntityState.Modified;
+
+                _context.SaveChanges();
+            }
         }
     }
 }

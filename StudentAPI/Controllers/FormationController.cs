@@ -42,7 +42,7 @@ namespace StudentAPI.Controllers
             return BadRequest();
         }
 
-        [Route("All")]
+        [Route("all")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -51,7 +51,7 @@ namespace StudentAPI.Controllers
             return formations == null ? NotFound() : Ok(formations);
         }
 
-        [Route("Find/{id}")]
+        [Route("find/{id}")]
         [HttpGet]
         public IActionResult GetFormationByid(int id)
         {
@@ -77,6 +77,29 @@ namespace StudentAPI.Controllers
             catch (Exception e)
             {
                 _logger.LogError("Erreur lors de la suppression d'une formation" + e.Message);
+            }
+
+            return BadRequest();
+        }
+
+
+        [Route("update/{id}")]
+        [HttpPut]
+        [ProducesResponseType(typeof(Formation), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Formation), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Formation), StatusCodes.Status500InternalServerError)]
+        public IActionResult ModifierFormation(int id,[FromBody] Formation formation)
+        {
+            try
+            {
+                _logger.LogInformation("Modification d'une formation");
+
+                _formationService.Update(id, formation);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Erreur lors de la modification d'une formation" + e.Message);
             }
 
             return BadRequest();
