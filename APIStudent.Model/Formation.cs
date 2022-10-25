@@ -12,5 +12,7 @@ namespace APIStudent.Model
 
         
         public int Niveau { get; set; }
+
+        public List<Module> Modules { get; set; }
     }
 }
