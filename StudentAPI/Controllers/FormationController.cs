@@ -42,7 +42,7 @@ namespace StudentAPI.Controllers
             return BadRequest();
         }
 
-        [Route("All")]
+        [Route("all")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -51,7 +51,7 @@ namespace StudentAPI.Controllers
             return formations == null ? NotFound() : Ok(formations);
         }
 
-        [Route("Find/{id}")]
+        [Route("find/{id}")]
         [HttpGet]
         public IActionResult GetFormationByid(int id)
         {

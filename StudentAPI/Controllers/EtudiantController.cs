@@ -95,6 +95,27 @@ namespace StudentAPI.Controllers
             return NotFound();
         }
 
+        [Route("findbyid/{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(Etudiant), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Etudiant), StatusCodes.Status404NotFound)]
+        public IActionResult GetEtudiantById(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Récupération d'un étudiant de par son id");
+                var etudiant = _studentService.FindById(id);
+                return etudiant == null ? NotFound() : Ok(etudiant);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            _logger.LogInformation("Etudiant non trouvé");
+            return NotFound();
+        }
+
 
         [Route("update/{id}")]
         [HttpPut]

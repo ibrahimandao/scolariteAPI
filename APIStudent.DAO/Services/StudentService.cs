@@ -50,5 +50,10 @@ namespace APIStudent.DAO.Services
         {
             return _context.Etudiants.Include("Formation").ToList();
         }
+
+        public Etudiant? FindById(int id)
+        {
+            return _context.Etudiants.Find(id);
+        }
     }
 }
