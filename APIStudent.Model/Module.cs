@@ -1,4 +1,6 @@
-﻿namespace APIStudent.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace APIStudent.Model
 {
     public  class Module
     {
@@ -7,6 +9,8 @@
 
         public Formateur Formateur { get; set; }
 
-        public int? formateurId { get; set; }
+        [ForeignKey("Formateur")]
+        public int? FormateurId { get; set; }
+
     }
 }

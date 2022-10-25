@@ -18,6 +18,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ScolariteDBContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"), b => b.MigrationsAssembly("APIStudent.DAO")));
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<IFormationService, FormationService>();
+builder.Services.AddTransient<IFormateurService, FormateurService>();
+builder.Services.AddTransient<IModuleService, ModuleService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {

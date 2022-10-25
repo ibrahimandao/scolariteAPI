@@ -20,5 +20,7 @@ namespace APIStudent.DAO.Data
         public DbSet<Formateur> Formateurs { get; set; }
 
         public DbSet<Module> Modules { get; set; }
+
+        public DbSet<FormationModule> FormationModules { get; set; }
     }
 }
