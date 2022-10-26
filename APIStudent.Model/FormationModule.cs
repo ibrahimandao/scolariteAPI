@@ -6,8 +6,8 @@ namespace APIStudent.Model
     {
         public int Id { get; set; }
 
-        [ForeignKey("Formateurs")]
-        public int FormateurId { get; set; }
+        [ForeignKey("Modules")]
+        public int ModuleId { get; set; }
 
         [ForeignKey("Formations")]
         public int FormationId { get; set; }

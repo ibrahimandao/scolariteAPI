@@ -11,7 +11,7 @@ namespace APIStudent.DAO.Services
         public void add(Module module)
         {
             try
-            {
+            {                
                 _context.Modules.Add(module);
                 _context.SaveChanges();
             }

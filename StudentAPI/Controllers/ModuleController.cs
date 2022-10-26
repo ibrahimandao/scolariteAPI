@@ -1,5 +1,4 @@
 ﻿using APIStudent.DAO.Interfaces;
-using APIStudent.DAO.Services;
 using APIStudent.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +12,12 @@ namespace StudentAPI.Controllers
 
         private readonly IModuleService _moduleService;
 
-        public ModuleController(IModuleService service, ILogger<ModuleController> logger)
+        private readonly IFormateurService _formateurService;
+
+        public ModuleController(IModuleService service, IFormateurService formateurService, ILogger<ModuleController> logger)
         {
             _moduleService = service;
+            _formateurService = formateurService;
             _logger = logger;
         }
 
@@ -29,6 +31,16 @@ namespace StudentAPI.Controllers
             try
             {
                 _logger.LogInformation("Création d'un module");
+
+                if (module.FormateurId.HasValue && module.FormateurId.Value > 0)
+                {
+                    var formateur = _formateurService.getFormateurById(module.FormateurId.Value);
+
+                    if (formateur != null)
+                        module.Formateur = formateur;
+                    else
+                        _formateurService.add(module.Formateur);
+                }
 
                 _moduleService.add(module);
                 return Ok();

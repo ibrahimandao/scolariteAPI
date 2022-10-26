@@ -20,6 +20,7 @@ builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<IFormationService, FormationService>();
 builder.Services.AddTransient<IFormateurService, FormateurService>();
 builder.Services.AddTransient<IModuleService, ModuleService>();
+builder.Services.AddTransient<IFormationModuleService, FormationModuleService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
