@@ -11,5 +11,9 @@ namespace APIStudent.Model
 
         [ForeignKey("Formations")]
         public int FormationId { get; set; }
+
+        public Module module { get; set; }
+
+        public Formation formation { get; set; }
     }
 }

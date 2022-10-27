@@ -2,7 +2,6 @@
 using APIStudent.DAO.Interfaces;
 using APIStudent.Model;
 using Microsoft.EntityFrameworkCore;
-
 namespace APIStudent.DAO.Services
 {
     public class FormationModuleService : IFormationModuleService
@@ -10,19 +9,46 @@ namespace APIStudent.DAO.Services
 
         private readonly ScolariteDBContext _context;
         public FormationModuleService(ScolariteDBContext context) => _context = context;
-        public void add(FormationModule formationModule)
+        public void add(FormationModuleForAdd formationModule)
         {
             try
             {
                 if (formationModule != null && formationModule.FormationId > 0 && _context.Formations.Any(i => i.Id.Equals(formationModule.FormationId))
                                            && formationModule.ModuleId > 0 && _context.Modules.Any(i => i.Id.Equals(formationModule.ModuleId)))
                 {
-                    _context.FormationModules.Add(formationModule);
+                    _context.FormationModules.Add(new FormationModule { ModuleId = formationModule.ModuleId,FormationId = formationModule.FormationId});
                     _context.SaveChanges();
                 }
                 else
                     throw new Exception();
                 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<FormationModule> get()
+        {
+            try
+            {
+
+                //return _context.FormationModules.Include("Module").Include("Formation").AsEnumerable();
+                return from formMod in _context.FormationModules
+                       join mod in _context.Modules.Include("Formateur") on formMod.Id equals mod.Id
+                       join form in _context.Formations on formMod.FormationId equals form.Id
+                       join format in _context.Formateurs on mod.FormateurId equals format.Id
+                       select new FormationModule
+                       {
+                           FormationId = form.Id,
+                           ModuleId = mod.Id,
+                           module = mod,
+                           formation = form,
+                           Id = formMod.Id,
+                       };
+
+
             }
             catch (Exception)
             {

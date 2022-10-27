@@ -20,10 +20,10 @@ namespace StudentAPI.Controllers
 
         [Route("add")]
         [HttpPost]
-        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status500InternalServerError)]
-        public IActionResult AjouterModule([FromBody] FormationModule formationModule)
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status500InternalServerError)]
+        public IActionResult AjouterModule([FromBody] FormationModuleForAdd formationModule)
         {
             try
             {
@@ -52,6 +52,27 @@ namespace StudentAPI.Controllers
                 _logger.LogInformation("Liste des modules d'une formation");
                 var modules = _formationModuleService.getModulesByFormationId(formationId);
                 return modules == null ? NotFound() : Ok(modules);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return NotFound();
+        }
+
+
+        [Route("all")]
+        [HttpGet]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status404NotFound)]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                _logger.LogInformation("Liste des module>>formation>>formateur");
+                var moduleFormationFormateur = _formationModuleService.get();
+                return moduleFormationFormateur == null ? NotFound() : Ok(moduleFormationFormateur);
             }
             catch (Exception)
             {

@@ -1,6 +1,7 @@
 ﻿using APIStudent.DAO.Data;
 using APIStudent.DAO.Interfaces;
 using APIStudent.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIStudent.DAO.Services
 {
@@ -25,7 +26,7 @@ namespace APIStudent.DAO.Services
         {
             try
             {
-                return _context.Modules.ToList();
+                return _context.Modules.Include("Formateur").AsEnumerable();
             }
             catch (Exception)
             {

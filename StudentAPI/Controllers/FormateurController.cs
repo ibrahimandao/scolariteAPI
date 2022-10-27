@@ -41,25 +41,7 @@ namespace StudentAPI.Controllers
             return BadRequest();
         }
 
-        //[Route("find/{matricule}")]
-        //[HttpGet]
-        //[ProducesResponseType(typeof(Etudiant), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(Etudiant), StatusCodes.Status404NotFound)]
-        //public IActionResult GetEtudiant(string matricule)
-        //{
-        //    try
-        //    {
-        //        _logger.LogInformation("appel méthode");
-        //        var etudiant = _studentService.Find(matricule);
-        //        return etudiant == null ? NotFound() : Ok(etudiant);
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //    }
-        //    return NotFound();
-        //}
-
+        
 
         [Route("all")]
         [HttpGet]
@@ -81,48 +63,48 @@ namespace StudentAPI.Controllers
             return NotFound();
         }
 
-        //[Route("findbyid/{id}")]
-        //[HttpGet]
-        //[ProducesResponseType(typeof(Etudiant), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(Etudiant), StatusCodes.Status404NotFound)]
-        //public IActionResult GetEtudiantById(int id)
-        //{
-        //    try
-        //    {
-        //        _logger.LogInformation("Récupération d'un étudiant de par son id");
-        //        var etudiant = _studentService.FindById(id);
-        //        return etudiant == null ? NotFound() : Ok(etudiant);
-        //    }
-        //    catch (Exception)
-        //    {
+        [Route("findbyid/{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(Formateur), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Formateur), StatusCodes.Status404NotFound)]
+        public IActionResult GetEtudiantById(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Récupération d'un formateur de par son id");
+                var formateur = _formateurService.getFormateurById(id);
+                return formateur == null ? NotFound() : Ok(formateur);
+            }
+            catch (Exception)
+            {
 
-        //    }
+            }
 
-        //    _logger.LogInformation("Etudiant non trouvé");
-        //    return NotFound();
-        //}
+            _logger.LogInformation("formateur non trouvé");
+            return NotFound();
+        }
 
 
-        //[Route("update/{id}")]
-        //[HttpPut]
-        //[ProducesResponseType(typeof(Formation), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(Formation), StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(typeof(Formation), StatusCodes.Status500InternalServerError)]
-        //public IActionResult ModifierEtudiant(int id, [FromBody] Etudiant etudiant)
-        //{
-        //    try
-        //    {
-        //        _logger.LogInformation("Modification d'un étudiant");
+        [Route("update/{id}")]
+        [HttpPut]
+        [ProducesResponseType(typeof(Formateur), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Formateur), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Formateur), StatusCodes.Status500InternalServerError)]
+        public IActionResult ModifierFormateur(int id, [FromBody] Formateur formateur)
+        {
+            try
+            {
+                _logger.LogInformation("Modification d'un formateur");
 
-        //        _studentService.Update(id, etudiant);
-        //        return Ok();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _logger.LogError("Erreur lors de la modification d'un étudiant" + e.Message);
-        //    }
+                _formateurService.update(id, formateur);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Erreur lors de la modification d'un formateur" + e.Message);
+            }
 
-        //    return BadRequest();
-        //}
+            return BadRequest();
+        }
     }
 }
