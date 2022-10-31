@@ -48,12 +48,40 @@ namespace APIStudent.DAO.Services
 
         public void remove(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var module = _context.Modules.Find(id);
+
+                if(module != null)
+                {
+                    _context.Modules.Remove(module);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void update(int id, Module module)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var item = _context.Modules.Find(id);
+
+                if (item != null)
+                {
+                    item.Descriptif = module.Descriptif;
+                    item.FormateurId = module.FormateurId;
+                    _context.Entry(item).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

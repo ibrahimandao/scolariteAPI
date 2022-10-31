@@ -73,5 +73,69 @@ namespace StudentAPI.Controllers
 
             return NotFound();
         }
+
+        [Route("find/{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status404NotFound)]
+        public IActionResult GetModuleById(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Récupérartion d'un module à partir d'un identifiant");
+                var module = _moduleService.getModuleById(id);
+                return module == null ? NotFound() : Ok(module);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return NotFound();
+        }
+
+        [Route("update/{id}")]
+        [HttpPut]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status500InternalServerError)]
+        public IActionResult ModifierModule(int id, [FromBody] Module module)
+        {
+            try
+            {
+                _logger.LogInformation("Update d'un module");
+
+                _moduleService.update(id, module);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Erreur lors de la mise à jour d'un module" + e.Message);
+            }
+
+            return BadRequest();
+        }
+
+        [Route("delete/{id}")]
+        [HttpDelete]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Module), StatusCodes.Status500InternalServerError)]
+        public IActionResult SupprimerModule(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Suppression d'un module");
+
+                _moduleService.remove(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Erreur lors de la suppression d'un module" + e.Message);
+            }
+
+            return BadRequest();
+        }
     }
 }

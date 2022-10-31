@@ -11,5 +11,9 @@ namespace APIStudent.DAO.Interfaces
         public IEnumerable<Module> getModulesByFormationId(int formationid);
 
         public IEnumerable<FormationModule> get();
+
+        public FormationModuleForAdd? getById(int id);
+
+        public void update(int id, FormationModuleForAdd formationModule);
     }
 }

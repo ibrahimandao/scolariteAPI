@@ -23,7 +23,7 @@ namespace StudentAPI.Controllers
         [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status500InternalServerError)]
-        public IActionResult AjouterModule([FromBody] FormationModuleForAdd formationModule)
+        public IActionResult AjouterLienFormationModule([FromBody] FormationModuleForAdd formationModule)
         {
             try
             {
@@ -40,6 +40,28 @@ namespace StudentAPI.Controllers
             return BadRequest();
         }
 
+
+        [Route("update/{id}")]
+        [HttpPut]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status500InternalServerError)]
+        public IActionResult ModifierLienFormationModule(int id,[FromBody] FormationModuleForAdd formationModule)
+        {
+            try
+            {
+                _logger.LogInformation("Modification du rattachement Formation >> Module");
+
+                _formationModuleService.update(id,formationModule);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Erreur lors de la odification du rattachement Formation >> Module" + e.Message);
+            }
+
+            return BadRequest();
+        }
 
         [Route("Formation/{formationId}/modules")]
         [HttpGet]
@@ -77,6 +99,47 @@ namespace StudentAPI.Controllers
             catch (Exception)
             {
 
+            }
+
+            return NotFound();
+        }
+
+        [Route("find/{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status404NotFound)]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Récupère un model formule <-> module à partir d'un id");
+                var formationModule = _formationModuleService.getById(id);
+                return formationModule == null ? NotFound() : Ok(formationModule);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return NotFound();
+        }
+
+        [Route("delete/{id}")]
+        [HttpDelete]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status500InternalServerError)]
+        public IActionResult SuppressionFormationModule(int id)
+        {
+            try
+            {
+                _logger.LogInformation("suppression lien formule <-> module à partir d'un id");
+                _formationModuleService.remove(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+               
             }
 
             return NotFound();

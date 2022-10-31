@@ -29,14 +29,31 @@ namespace APIStudent.DAO.Services
             }
         }
 
+        public FormationModuleForAdd? getById(int id)
+        {
+            try
+            {
+                return (from formMod in _context.FormationModules.Where(item => item.Id.Equals(id))
+                       select new FormationModuleForAdd
+                       {
+                           FormationId = formMod.FormationId,
+                           ModuleId = formMod.ModuleId,
+                       }).FirstOrDefault();
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public IEnumerable<FormationModule> get()
         {
             try
             {
 
-                //return _context.FormationModules.Include("Module").Include("Formation").AsEnumerable();
                 return from formMod in _context.FormationModules
-                       join mod in _context.Modules.Include("Formateur") on formMod.Id equals mod.Id
+                       join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
                        join form in _context.Formations on formMod.FormationId equals form.Id
                        join format in _context.Formateurs on mod.FormateurId equals format.Id
                        select new FormationModule
@@ -87,6 +104,34 @@ namespace APIStudent.DAO.Services
                     _context.SaveChanges();
                 }
                 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void update(int id, FormationModuleForAdd formationModule)
+        {
+            try
+            {
+                var element = _context.FormationModules.Find(id);
+                if (element != null)
+                {
+                    if (formationModule != null && formationModule.FormationId > 0 && _context.Formations.Any(i => i.Id.Equals(formationModule.FormationId))
+                                       && formationModule.ModuleId > 0 && _context.Modules.Any(i => i.Id.Equals(formationModule.ModuleId)))
+                    {                        
+                        element.FormationId = formationModule.FormationId;
+                        element.ModuleId = formationModule.ModuleId;
+
+                        _context.Entry(element).State = EntityState.Modified;
+                        _context.SaveChanges();
+                    }
+                    else
+                        throw new Exception();
+                    
+                }
+
             }
             catch (Exception)
             {
