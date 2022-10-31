@@ -30,7 +30,7 @@ namespace StudentAPI.Controllers
         {
             try
             {
-                _logger.LogInformation("appel méthode");
+                _logger.LogInformation("Ajout d'un étudiant");
                 
                 if (etudiant.FormationId.HasValue && etudiant.FormationId.Value>0)
                 {

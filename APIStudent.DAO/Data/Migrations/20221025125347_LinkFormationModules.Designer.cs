@@ -4,6 +4,7 @@ using APIStudent.DAO.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIStudent.DAO.Data.Migrations
 {
     [DbContext(typeof(ScolariteDBContext))]
-    partial class ScolariteDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221025125347_LinkFormationModules")]
+    partial class LinkFormationModules
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,29 +112,6 @@ namespace APIStudent.DAO.Data.Migrations
                     b.ToTable("Formations");
                 });
 
-            modelBuilder.Entity("APIStudent.Model.FormationModule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("FormationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FormationId");
-
-                    b.HasIndex("ModuleId");
-
-                    b.ToTable("FormationModules");
-                });
-
             modelBuilder.Entity("APIStudent.Model.Module", b =>
                 {
                     b.Property<int>("Id")
@@ -145,13 +124,17 @@ namespace APIStudent.DAO.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FormateurId")
-                        .IsRequired()
+                    b.Property<int?>("FormationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("formateurId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FormateurId");
+                    b.HasIndex("FormationId");
+
+                    b.HasIndex("formateurId");
 
                     b.ToTable("Modules");
                 });
@@ -167,34 +150,22 @@ namespace APIStudent.DAO.Data.Migrations
                     b.Navigation("Formation");
                 });
 
-            modelBuilder.Entity("APIStudent.Model.FormationModule", b =>
-                {
-                    b.HasOne("APIStudent.Model.Formation", "Formation")
-                        .WithMany()
-                        .HasForeignKey("FormationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("APIStudent.Model.Module", "Module")
-                        .WithMany()
-                        .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Formation");
-
-                    b.Navigation("Module");
-                });
-
             modelBuilder.Entity("APIStudent.Model.Module", b =>
                 {
+                    b.HasOne("APIStudent.Model.Formation", null)
+                        .WithMany("Modules")
+                        .HasForeignKey("FormationId");
+
                     b.HasOne("APIStudent.Model.Formateur", "Formateur")
                         .WithMany()
-                        .HasForeignKey("FormateurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("formateurId");
 
                     b.Navigation("Formateur");
+                });
+
+            modelBuilder.Entity("APIStudent.Model.Formation", b =>
+                {
+                    b.Navigation("Modules");
                 });
 #pragma warning restore 612, 618
         }
