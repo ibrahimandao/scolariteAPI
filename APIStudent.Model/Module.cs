@@ -12,5 +12,7 @@ namespace APIStudent.Model
         [ForeignKey("Formateur")]
         public int? FormateurId { get; set; }
 
+        public bool IsOneline { get; set; }
+
     }
 }

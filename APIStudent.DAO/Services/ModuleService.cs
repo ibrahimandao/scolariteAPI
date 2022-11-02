@@ -74,6 +74,7 @@ namespace APIStudent.DAO.Services
                 {
                     item.Descriptif = module.Descriptif;
                     item.FormateurId = module.FormateurId;
+                    item.IsOneline = module.IsOneline;
                     _context.Entry(item).State = EntityState.Modified;
                     _context.SaveChanges();
                 }
