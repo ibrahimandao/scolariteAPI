@@ -4,6 +4,7 @@ using APIStudent.DAO.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIStudent.DAO.Data.Migrations
 {
     [DbContext(typeof(ScolariteDBContext))]
-    partial class ScolariteDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221102081757_AjoutChamp_IsOneline")]
+    partial class AjoutChamp_IsOneline
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,30 +120,10 @@ namespace APIStudent.DAO.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CreneauHoraireDebut")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreneauHoraireFin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateDebut")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateFin")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("FormationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JourSemaine")
-                        .HasColumnType("int");
-
                     b.Property<int>("ModuleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Periodicite")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

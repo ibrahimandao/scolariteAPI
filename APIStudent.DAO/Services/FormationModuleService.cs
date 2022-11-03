@@ -16,7 +16,17 @@ namespace APIStudent.DAO.Services
                 if (formationModule != null && formationModule.FormationId > 0 && _context.Formations.Any(i => i.Id.Equals(formationModule.FormationId))
                                            && formationModule.ModuleId > 0 && _context.Modules.Any(i => i.Id.Equals(formationModule.ModuleId)))
                 {
-                    _context.FormationModules.Add(new FormationModule { ModuleId = formationModule.ModuleId,FormationId = formationModule.FormationId});
+                    _context.FormationModules.Add(new FormationModule 
+                    {   
+                        ModuleId = formationModule.ModuleId,
+                        FormationId = formationModule.FormationId,
+                        DateDebut = formationModule.DateDebut,
+                        DateFin = formationModule.DateFin,
+                        CreneauHoraireDebut = formationModule.CreneauHoraireDebut,
+                        CreneauHoraireFin = formationModule.CreneauHoraireFin,
+                        Periodicite = formationModule.Periodicite,
+                        JourSemaine = formationModule.JourSemaine
+                    });
                     _context.SaveChanges();
                 }
                 else
@@ -38,6 +48,12 @@ namespace APIStudent.DAO.Services
                        {
                            FormationId = formMod.FormationId,
                            ModuleId = formMod.ModuleId,
+                           DateDebut = formMod.DateDebut,
+                           DateFin = formMod.DateFin,
+                           CreneauHoraireDebut = formMod.CreneauHoraireDebut,
+                           CreneauHoraireFin = formMod.CreneauHoraireFin,
+                           Periodicite = formMod.Periodicite,
+                           JourSemaine = formMod.JourSemaine
                        }).FirstOrDefault();
 
 
@@ -63,6 +79,12 @@ namespace APIStudent.DAO.Services
                            module = mod,
                            formation = form,
                            Id = formMod.Id,
+                           DateDebut = formMod.DateDebut,
+                           DateFin = formMod.DateFin,
+                           CreneauHoraireDebut = formMod.CreneauHoraireDebut,
+                           CreneauHoraireFin = formMod.CreneauHoraireFin,
+                           Periodicite   = formMod.Periodicite,
+                           JourSemaine = formMod.JourSemaine,
                        };
 
 
@@ -123,6 +145,12 @@ namespace APIStudent.DAO.Services
                     {                        
                         element.FormationId = formationModule.FormationId;
                         element.ModuleId = formationModule.ModuleId;
+                        element.DateDebut = formationModule.DateDebut;
+                        element.DateFin = formationModule.DateFin;
+                        element.CreneauHoraireDebut = formationModule.CreneauHoraireDebut;
+                        element.CreneauHoraireFin = formationModule.CreneauHoraireFin;
+                        element.Periodicite = formationModule.Periodicite;
+                        element.JourSemaine = formationModule.JourSemaine;
 
                         _context.Entry(element).State = EntityState.Modified;
                         _context.SaveChanges();
