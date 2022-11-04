@@ -2,6 +2,8 @@
 using APIStudent.DAO.Interfaces;
 using APIStudent.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
+
 namespace APIStudent.DAO.Services
 {
     public class FormationModuleService : IFormationModuleService
@@ -24,8 +26,8 @@ namespace APIStudent.DAO.Services
                         DateFin = formationModule.DateFin,
                         CreneauHoraireDebut = formationModule.CreneauHoraireDebut,
                         CreneauHoraireFin = formationModule.CreneauHoraireFin,
-                        Periodicite = formationModule.Periodicite,
-                        JourSemaine = formationModule.JourSemaine
+                        Periodicite = (Periodicite)formationModule.Periodicite,
+                        JourSemaine = (DayOfWeek)formationModule.JourSemaine
                     });
                     _context.SaveChanges();
                 }
@@ -52,8 +54,8 @@ namespace APIStudent.DAO.Services
                            DateFin = formMod.DateFin,
                            CreneauHoraireDebut = formMod.CreneauHoraireDebut,
                            CreneauHoraireFin = formMod.CreneauHoraireFin,
-                           Periodicite = formMod.Periodicite,
-                           JourSemaine = formMod.JourSemaine
+                           Periodicite = (int)formMod.Periodicite,
+                           JourSemaine = (int)formMod.JourSemaine
                        }).FirstOrDefault();
 
 
@@ -95,18 +97,25 @@ namespace APIStudent.DAO.Services
             }
         }
 
-        public IEnumerable<Module> getModulesByFormationId(int formationid)
+        public ListeModuleFormation getModulesByFormationId(int formationid)
         {
             try
             {
-               
+
                 var modules = from a in _context.Modules.Include("Formateur")
                               join b in _context.FormationModules on a.Id equals b.ModuleId
+                              join c in _context.Formations on b.FormationId equals c.Id
                               where b.FormationId == formationid
                               select a;
 
-                return modules;
+                var formation = _context.Formations.Find(formationid);
+                var libelle = formation == null ? string.Empty : formation.Libelle;
 
+                return     new ListeModuleFormation 
+                              { 
+                                  LibelleFormation = libelle,
+                                  Modules = modules
+                              };
 
             }
             catch (Exception)
@@ -149,8 +158,8 @@ namespace APIStudent.DAO.Services
                         element.DateFin = formationModule.DateFin;
                         element.CreneauHoraireDebut = formationModule.CreneauHoraireDebut;
                         element.CreneauHoraireFin = formationModule.CreneauHoraireFin;
-                        element.Periodicite = formationModule.Periodicite;
-                        element.JourSemaine = formationModule.JourSemaine;
+                        element.Periodicite = (Periodicite)formationModule.Periodicite;
+                        element.JourSemaine = (DayOfWeek)formationModule.JourSemaine;
 
                         _context.Entry(element).State = EntityState.Modified;
                         _context.SaveChanges();

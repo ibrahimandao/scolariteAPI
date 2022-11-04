@@ -51,6 +51,17 @@ namespace APIStudent.DAO.Services
             return _context.Etudiants.Include("Formation").ToList();
         }
 
+        public ListeEtudiantFormation GetEtudiantByFormationId(int formationId)
+        {
+            var etudiants = _context.Etudiants.Include("Formation").Where(c => c.FormationId == formationId);
+
+            return new ListeEtudiantFormation
+            {
+                Etudiants = etudiants,
+                LibelleFormation = etudiants.First().Formation.Libelle
+            };
+        }
+
         public Etudiant? FindById(int id)
         {
             return _context.Etudiants.Find(id);

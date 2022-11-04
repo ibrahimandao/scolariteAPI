@@ -11,5 +11,7 @@ namespace APIStudent.DAO.Interfaces
 
         public Etudiant? FindById(int id);
         public IEnumerable<Etudiant> GetList();
+
+        public ListeEtudiantFormation GetEtudiantByFormationId(int formationId);
     }
 }

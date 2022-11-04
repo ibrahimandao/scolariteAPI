@@ -8,7 +8,7 @@ namespace APIStudent.DAO.Interfaces
 
         public void remove(int id);
 
-        public IEnumerable<Module> getModulesByFormationId(int formationid);
+        public ListeModuleFormation getModulesByFormationId(int formationid);
 
         public IEnumerable<FormationModule> get();
 
