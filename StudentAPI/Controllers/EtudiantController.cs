@@ -148,7 +148,7 @@ namespace StudentAPI.Controllers
         {
             try
             {
-                _logger.LogInformation("appel méthode");
+                _logger.LogInformation("Récupération des la liste des étudiants par formation");
                 var etudiants = _studentService.GetEtudiantByFormationId(formationId);
                 return etudiants == null ? NotFound() : Ok(etudiants);
             }

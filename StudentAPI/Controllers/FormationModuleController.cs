@@ -65,8 +65,8 @@ namespace StudentAPI.Controllers
 
         [Route("Formation/{formationId}/modules")]
         [HttpGet]
-        [ProducesResponseType(typeof(Module), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Module), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ListeModuleFormation), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ListeModuleFormation), StatusCodes.Status404NotFound)]
         public IActionResult GetModulesByFormationId(int formationId)
         {
             try
