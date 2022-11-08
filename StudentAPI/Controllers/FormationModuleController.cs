@@ -104,6 +104,46 @@ namespace StudentAPI.Controllers
             return NotFound();
         }
 
+        [Route("planningdelasemaine")]
+        [HttpGet]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status404NotFound)]
+        public IActionResult GetPlanningSemaine()
+        {
+            try
+            {
+                _logger.LogInformation("Liste des module>>formation>>formateur : planning de la semaine");
+                var moduleFormationFormateur = _formationModuleService.getPlanningDelaSemaine();
+                return moduleFormationFormateur == null ? NotFound() : Ok(moduleFormationFormateur);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return NotFound();
+        }
+
+        [Route("planingpardate")]
+        [HttpGet]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status404NotFound)]
+        public IActionResult GetFormationModuleByDate(DateTime dateDebut,DateTime dateFin)
+        {
+            try
+            {
+                _logger.LogInformation("Liste des module>>formation>>formateur sur l'intervalle "+ dateDebut +" "+ dateFin);
+                var moduleFormationFormateur = _formationModuleService.getByDate(dateDebut, dateFin);
+                return moduleFormationFormateur == null ? NotFound() : Ok(moduleFormationFormateur);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return NotFound();
+        }
+
         [Route("find/{id}")]
         [HttpGet]
         [ProducesResponseType(typeof(FormationModuleForAdd), StatusCodes.Status200OK)]

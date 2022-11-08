@@ -15,5 +15,9 @@ namespace APIStudent.DAO.Interfaces
         public FormationModuleForAdd? getById(int id);
 
         public void update(int id, FormationModuleForAdd formationModule);
+
+        public IEnumerable<FormationModule> getPlanningDelaSemaine();
+
+        public IEnumerable<FormationModule> getByDate(DateTime dateDebut, DateTime dateFin);
     }
 }

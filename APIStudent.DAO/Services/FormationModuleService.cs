@@ -97,6 +97,72 @@ namespace APIStudent.DAO.Services
             }
         }
 
+        public IEnumerable<FormationModule> getByDate(DateTime dateDebut, DateTime dateFin)
+        {
+            try
+            {
+
+                return from formMod in _context.FormationModules
+                       join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
+                       join form in _context.Formations on formMod.FormationId equals form.Id
+                       join format in _context.Formateurs on mod.FormateurId equals format.Id
+                       where formMod.DateDebut >= dateDebut && formMod.DateFin >= dateFin
+                       select new FormationModule
+                       {
+                           FormationId = form.Id,
+                           ModuleId = mod.Id,
+                           module = mod,
+                           formation = form,
+                           Id = formMod.Id,
+                           DateDebut = formMod.DateDebut,
+                           DateFin = formMod.DateFin,
+                           CreneauHoraireDebut = formMod.CreneauHoraireDebut,
+                           CreneauHoraireFin = formMod.CreneauHoraireFin,
+                           Periodicite = formMod.Periodicite,
+                           JourSemaine = formMod.JourSemaine,
+                       };
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<FormationModule> getPlanningDelaSemaine()
+        {
+            try
+            {
+
+                return from formMod in _context.FormationModules
+                       join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
+                       join form in _context.Formations on formMod.FormationId equals form.Id
+                       join format in _context.Formateurs on mod.FormateurId equals format.Id
+                       where formMod.DateDebut >= DateTime.Now && formMod.DateFin >= DateTime.Now && formMod.Periodicite == Periodicite.Hebdomadaire
+                       select new FormationModule
+                       {
+                           FormationId = form.Id,
+                           ModuleId = mod.Id,
+                           module = mod,
+                           formation = form,
+                           Id = formMod.Id,
+                           DateDebut = formMod.DateDebut,
+                           DateFin = formMod.DateFin,
+                           CreneauHoraireDebut = formMod.CreneauHoraireDebut,
+                           CreneauHoraireFin = formMod.CreneauHoraireFin,
+                           Periodicite = formMod.Periodicite,
+                           JourSemaine = formMod.JourSemaine,
+                       };
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public ListeModuleFormation getModulesByFormationId(int formationid)
         {
             try
