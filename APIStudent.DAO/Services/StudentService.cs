@@ -12,6 +12,12 @@ namespace APIStudent.DAO.Services
         public  void Add(Etudiant etu)
         {           
             _context.Etudiants.Add(etu);
+            _context.SaveChanges();
+            string matricule = "MIT" + etu.Id.ToString().PadLeft(6, '0');
+
+            etu.Matricule = matricule;
+
+            _context.Entry(etu).State= EntityState.Modified;
 
             _context.SaveChanges();
         }
@@ -35,7 +41,7 @@ namespace APIStudent.DAO.Services
                 etu.Phone = etudiant.Phone;
                 etu.City = etudiant.City;
                 etu.Email = etudiant.Email;
-                etu.Matricule = etudiant.Matricule;
+                etu.Matricule =  "MIT" + etu.Id.ToString().PadLeft(6, '0'); 
                 etu.FormationId = etudiant.FormationId;
 
                 _context.Entry(etu).State = EntityState.Modified;
@@ -49,6 +55,17 @@ namespace APIStudent.DAO.Services
         public IEnumerable<Etudiant> GetList()
         {
             return _context.Etudiants.Include("Formation").ToList();
+        }
+
+        public ListeEtudiantFormation GetEtudiantByFormationId(int formationId)
+        {
+            var etudiants = _context.Etudiants.Include("Formation").Where(c => c.FormationId == formationId);
+
+            return new ListeEtudiantFormation
+            {
+                Etudiants = etudiants,
+                LibelleFormation = etudiants.First().Formation.Libelle
+            };
         }
 
         public Etudiant? FindById(int id)

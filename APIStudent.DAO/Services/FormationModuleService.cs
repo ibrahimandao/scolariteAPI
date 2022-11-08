@@ -2,6 +2,8 @@
 using APIStudent.DAO.Interfaces;
 using APIStudent.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
+
 namespace APIStudent.DAO.Services
 {
     public class FormationModuleService : IFormationModuleService
@@ -24,8 +26,8 @@ namespace APIStudent.DAO.Services
                         DateFin = formationModule.DateFin,
                         CreneauHoraireDebut = formationModule.CreneauHoraireDebut,
                         CreneauHoraireFin = formationModule.CreneauHoraireFin,
-                        Periodicite = formationModule.Periodicite,
-                        JourSemaine = formationModule.JourSemaine
+                        Periodicite = (Periodicite)formationModule.Periodicite,
+                        JourSemaine = (DayOfWeek)formationModule.JourSemaine
                     });
                     _context.SaveChanges();
                 }
@@ -52,8 +54,8 @@ namespace APIStudent.DAO.Services
                            DateFin = formMod.DateFin,
                            CreneauHoraireDebut = formMod.CreneauHoraireDebut,
                            CreneauHoraireFin = formMod.CreneauHoraireFin,
-                           Periodicite = formMod.Periodicite,
-                           JourSemaine = formMod.JourSemaine
+                           Periodicite = (int)formMod.Periodicite,
+                           JourSemaine = (int)formMod.JourSemaine
                        }).FirstOrDefault();
 
 
@@ -95,18 +97,91 @@ namespace APIStudent.DAO.Services
             }
         }
 
-        public IEnumerable<Module> getModulesByFormationId(int formationid)
+        public IEnumerable<FormationModule> getByDate(DateTime dateDebut, DateTime dateFin)
         {
             try
             {
-               
+
+                return from formMod in _context.FormationModules
+                       join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
+                       join form in _context.Formations on formMod.FormationId equals form.Id
+                       join format in _context.Formateurs on mod.FormateurId equals format.Id
+                       where formMod.DateDebut >= dateDebut && formMod.DateFin >= dateFin
+                       select new FormationModule
+                       {
+                           FormationId = form.Id,
+                           ModuleId = mod.Id,
+                           module = mod,
+                           formation = form,
+                           Id = formMod.Id,
+                           DateDebut = formMod.DateDebut,
+                           DateFin = formMod.DateFin,
+                           CreneauHoraireDebut = formMod.CreneauHoraireDebut,
+                           CreneauHoraireFin = formMod.CreneauHoraireFin,
+                           Periodicite = formMod.Periodicite,
+                           JourSemaine = formMod.JourSemaine,
+                       };
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<FormationModule> getPlanningDelaSemaine()
+        {
+            try
+            {
+
+                return from formMod in _context.FormationModules
+                       join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
+                       join form in _context.Formations on formMod.FormationId equals form.Id
+                       join format in _context.Formateurs on mod.FormateurId equals format.Id
+                       where formMod.DateDebut >= DateTime.Now && formMod.DateFin >= DateTime.Now && formMod.Periodicite == Periodicite.Hebdomadaire
+                       select new FormationModule
+                       {
+                           FormationId = form.Id,
+                           ModuleId = mod.Id,
+                           module = mod,
+                           formation = form,
+                           Id = formMod.Id,
+                           DateDebut = formMod.DateDebut,
+                           DateFin = formMod.DateFin,
+                           CreneauHoraireDebut = formMod.CreneauHoraireDebut,
+                           CreneauHoraireFin = formMod.CreneauHoraireFin,
+                           Periodicite = formMod.Periodicite,
+                           JourSemaine = formMod.JourSemaine,
+                       };
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ListeModuleFormation getModulesByFormationId(int formationid)
+        {
+            try
+            {
+
                 var modules = from a in _context.Modules.Include("Formateur")
                               join b in _context.FormationModules on a.Id equals b.ModuleId
+                              join c in _context.Formations on b.FormationId equals c.Id
                               where b.FormationId == formationid
                               select a;
 
-                return modules;
+                var formation = _context.Formations.Find(formationid);
+                var libelle = formation == null ? string.Empty : formation.Libelle;
 
+                return     new ListeModuleFormation 
+                              { 
+                                  LibelleFormation = libelle,
+                                  Modules = modules
+                              };
 
             }
             catch (Exception)
@@ -149,8 +224,8 @@ namespace APIStudent.DAO.Services
                         element.DateFin = formationModule.DateFin;
                         element.CreneauHoraireDebut = formationModule.CreneauHoraireDebut;
                         element.CreneauHoraireFin = formationModule.CreneauHoraireFin;
-                        element.Periodicite = formationModule.Periodicite;
-                        element.JourSemaine = formationModule.JourSemaine;
+                        element.Periodicite = (Periodicite)formationModule.Periodicite;
+                        element.JourSemaine = (DayOfWeek)formationModule.JourSemaine;
 
                         _context.Entry(element).State = EntityState.Modified;
                         _context.SaveChanges();

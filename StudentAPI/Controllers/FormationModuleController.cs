@@ -65,8 +65,8 @@ namespace StudentAPI.Controllers
 
         [Route("Formation/{formationId}/modules")]
         [HttpGet]
-        [ProducesResponseType(typeof(Module), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Module), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ListeModuleFormation), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ListeModuleFormation), StatusCodes.Status404NotFound)]
         public IActionResult GetModulesByFormationId(int formationId)
         {
             try
@@ -94,6 +94,46 @@ namespace StudentAPI.Controllers
             {
                 _logger.LogInformation("Liste des module>>formation>>formateur");
                 var moduleFormationFormateur = _formationModuleService.get();
+                return moduleFormationFormateur == null ? NotFound() : Ok(moduleFormationFormateur);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return NotFound();
+        }
+
+        [Route("planningdelasemaine")]
+        [HttpGet]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status404NotFound)]
+        public IActionResult GetPlanningSemaine()
+        {
+            try
+            {
+                _logger.LogInformation("Liste des module>>formation>>formateur : planning de la semaine");
+                var moduleFormationFormateur = _formationModuleService.getPlanningDelaSemaine();
+                return moduleFormationFormateur == null ? NotFound() : Ok(moduleFormationFormateur);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return NotFound();
+        }
+
+        [Route("planingpardate")]
+        [HttpGet]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(FormationModule), StatusCodes.Status404NotFound)]
+        public IActionResult GetFormationModuleByDate(DateTime dateDebut,DateTime dateFin)
+        {
+            try
+            {
+                _logger.LogInformation("Liste des module>>formation>>formateur sur l'intervalle "+ dateDebut +" "+ dateFin);
+                var moduleFormationFormateur = _formationModuleService.getByDate(dateDebut, dateFin);
                 return moduleFormationFormateur == null ? NotFound() : Ok(moduleFormationFormateur);
             }
             catch (Exception)

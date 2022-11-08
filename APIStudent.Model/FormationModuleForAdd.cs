@@ -13,9 +13,9 @@
 
         public string CreneauHoraireFin { get; set; }
 
-        public Periodicite Periodicite { get; set; }
+        public int Periodicite { get; set; }
 
-        public DayOfWeek JourSemaine { get; set; }
+        public int JourSemaine { get; set; }
 
 
     }

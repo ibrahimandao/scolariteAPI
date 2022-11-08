@@ -138,5 +138,25 @@ namespace StudentAPI.Controllers
 
             return BadRequest();
         }
+
+
+        [Route("Formation/{formationId}/list")]
+        [HttpGet]
+        [ProducesResponseType(typeof(ListeEtudiantFormation), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ListeEtudiantFormation), StatusCodes.Status404NotFound)]
+        public IActionResult GetEtudiantByFormationId(int formationId)
+        {
+            try
+            {
+                _logger.LogInformation("Récupération des la liste des étudiants par formation");
+                var etudiants = _studentService.GetEtudiantByFormationId(formationId);
+                return etudiants == null ? NotFound() : Ok(etudiants);
+            }
+            catch (Exception)
+            {
+
+            }
+            return NotFound();
+        }
     }
 }
