@@ -18,6 +18,6 @@ namespace APIStudent.DAO.Interfaces
 
         public IEnumerable<FormationModule> getPlanningDelaSemaine();
 
-        public IEnumerable<FormationModule> getByDate(DateTime dateDebut, DateTime dateFin);
+        public IEnumerable<FormationModule> getByDate(DateTime? dateDebut, DateTime? dateFin);
     }
 }
