@@ -128,7 +128,7 @@ namespace StudentAPI.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(FormationModule), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(FormationModule), StatusCodes.Status404NotFound)]
-        public IActionResult GetFormationModuleByDate(DateTime dateDebut,DateTime dateFin)
+        public IActionResult GetFormationModuleByDate(DateTime? dateDebut,DateTime? dateFin)
         {
             try
             {

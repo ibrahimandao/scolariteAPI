@@ -97,7 +97,7 @@ namespace APIStudent.DAO.Services
             }
         }
 
-        public IEnumerable<FormationModule> getByDate(DateTime dateDebut, DateTime dateFin)
+        public IEnumerable<FormationModule> getByDate(DateTime? dateDebut, DateTime? dateFin)
         {
             try
             {
@@ -106,7 +106,8 @@ namespace APIStudent.DAO.Services
                        join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
                        join form in _context.Formations on formMod.FormationId equals form.Id
                        join format in _context.Formateurs on mod.FormateurId equals format.Id
-                       where formMod.DateDebut >= dateDebut && formMod.DateFin >= dateFin
+                       where (!dateDebut.HasValue || (formMod.DateDebut >= dateDebut && dateDebut.HasValue)) &&
+                             (!dateFin.HasValue || (formMod.DateDebut >= dateFin && dateFin.HasValue))
                        select new FormationModule
                        {
                            FormationId = form.Id,
@@ -139,7 +140,7 @@ namespace APIStudent.DAO.Services
                        join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
                        join form in _context.Formations on formMod.FormationId equals form.Id
                        join format in _context.Formateurs on mod.FormateurId equals format.Id
-                       where formMod.DateDebut >= DateTime.Now && formMod.DateFin >= DateTime.Now && formMod.Periodicite == Periodicite.Hebdomadaire
+                       where formMod.DateDebut >= DateTime.Now && formMod.DateFin <= DateTime.Now && formMod.Periodicite == Periodicite.Hebdomadaire
                        select new FormationModule
                        {
                            FormationId = form.Id,
