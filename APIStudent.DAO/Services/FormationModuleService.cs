@@ -140,7 +140,7 @@ namespace APIStudent.DAO.Services
                        join mod in _context.Modules.Include("Formateur") on formMod.ModuleId equals mod.Id
                        join form in _context.Formations on formMod.FormationId equals form.Id
                        join format in _context.Formateurs on mod.FormateurId equals format.Id
-                       where formMod.DateDebut >= DateTime.Now && formMod.DateFin <= DateTime.Now && formMod.Periodicite == Periodicite.Hebdomadaire
+                       where formMod.DateDebut <= DateTime.Now && formMod.DateFin >= DateTime.Now && formMod.Periodicite == Periodicite.Hebdomadaire
                        select new FormationModule
                        {
                            FormationId = form.Id,
