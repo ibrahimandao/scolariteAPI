@@ -3,6 +3,7 @@ using APIStudent.DAO.Data;
 using APIStudent.DAO.Services;
 using APIStudent.DAO.Interfaces;
 using log4net.Config;
+using APIStudent.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.AddTransient<IFormationService, FormationService>();
 builder.Services.AddTransient<IFormateurService, FormateurService>();
 builder.Services.AddTransient<IModuleService, ModuleService>();
 builder.Services.AddTransient<IFormationModuleService, FormationModuleService>();
+builder.Services.AddTransient<IUtilisateur, UtilisateurService>();
+builder.Services.AddTransient<IProfil, ProfilService>();
+builder.Services.AddTransient<IRole, RoleService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
