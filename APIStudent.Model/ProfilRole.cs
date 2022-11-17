@@ -15,4 +15,11 @@ namespace APIStudent.Model
 
         public int ProfilId { get; set; }
     }
+
+    public class ProfilRoleLite
+    {      
+        public int RoleId { get; set; }
+
+        public int ProfilId { get; set; }
+    }
 }

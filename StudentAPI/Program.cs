@@ -25,6 +25,7 @@ builder.Services.AddTransient<IFormationModuleService, FormationModuleService>()
 builder.Services.AddTransient<IUtilisateur, UtilisateurService>();
 builder.Services.AddTransient<IProfil, ProfilService>();
 builder.Services.AddTransient<IRole, RoleService>();
+builder.Services.AddTransient<IProfilRole, ProfilRoleService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {

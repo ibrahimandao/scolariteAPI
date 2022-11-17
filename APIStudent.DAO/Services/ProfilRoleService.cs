@@ -9,13 +9,16 @@ namespace APIStudent.DAO.Services
     {
         private readonly ScolariteDBContext _context;
         public ProfilRoleService(ScolariteDBContext context) => _context = context;
-        public void Add(ProfilRole profilRole)
+        public void Add(ProfilRoleLite profilRole)
         {
             try
             {
                 if (_context.Profils.Any(a => a.Id == profilRole.ProfilId) && _context.Roles.Any(a => a.Id == profilRole.RoleId))
-                {                 
-                    _context.ProfilRoles.Add(profilRole);
+                {
+                    var item = new ProfilRole();
+                    item.ProfilId = profilRole.ProfilId;
+                    item.RoleId = profilRole.RoleId;
+                    _context.ProfilRoles.Add(item);
                     _context.SaveChanges();
                 }
 
@@ -44,7 +47,7 @@ namespace APIStudent.DAO.Services
             }
         }
 
-        public void Update(int id, ProfilRole profilRole)
+        public void Update(int id, ProfilRoleLite profilRole)
         {
             try
             {
