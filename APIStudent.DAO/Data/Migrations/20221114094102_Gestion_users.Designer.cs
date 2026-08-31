@@ -4,6 +4,7 @@ using APIStudent.DAO.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIStudent.DAO.Data.Migrations
 {
     [DbContext(typeof(ScolariteDBContext))]
-    partial class ScolariteDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221114094102_Gestion_users")]
+    partial class Gestion_users
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,113 +181,6 @@ namespace APIStudent.DAO.Data.Migrations
                     b.ToTable("Modules");
                 });
 
-            modelBuilder.Entity("APIStudent.Model.Profil", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Libelle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Profils");
-                });
-
-            modelBuilder.Entity("APIStudent.Model.ProfilRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ProfilId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfilId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("ProfilRoles");
-                });
-
-            modelBuilder.Entity("APIStudent.Model.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("CanDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CanEdit")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CanRead")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CanWrite")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CodeFonctionnalite")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("APIStudent.Model.Utilisateur", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prenom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProfilId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfilId");
-
-                    b.ToTable("Utilisateurs");
-                });
-
             modelBuilder.Entity("APIStudent.Model.Etudiant", b =>
                 {
                     b.HasOne("APIStudent.Model.Formation", "Formation")
@@ -325,36 +220,6 @@ namespace APIStudent.DAO.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Formateur");
-                });
-
-            modelBuilder.Entity("APIStudent.Model.ProfilRole", b =>
-                {
-                    b.HasOne("APIStudent.Model.Profil", "Profil")
-                        .WithMany()
-                        .HasForeignKey("ProfilId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("APIStudent.Model.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profil");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("APIStudent.Model.Utilisateur", b =>
-                {
-                    b.HasOne("APIStudent.Model.Profil", "Profil")
-                        .WithMany()
-                        .HasForeignKey("ProfilId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profil");
                 });
 #pragma warning restore 612, 618
         }

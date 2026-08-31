@@ -4,6 +4,7 @@ using APIStudent.DAO.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIStudent.DAO.Data.Migrations
 {
     [DbContext(typeof(ScolariteDBContext))]
-    partial class ScolariteDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221114094507_Gestion_users_1")]
+    partial class Gestion_users_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,10 +189,6 @@ namespace APIStudent.DAO.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Libelle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -276,12 +274,7 @@ namespace APIStudent.DAO.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProfilId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfilId");
 
                     b.ToTable("Utilisateurs");
                 });
@@ -344,17 +337,6 @@ namespace APIStudent.DAO.Data.Migrations
                     b.Navigation("Profil");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("APIStudent.Model.Utilisateur", b =>
-                {
-                    b.HasOne("APIStudent.Model.Profil", "Profil")
-                        .WithMany()
-                        .HasForeignKey("ProfilId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profil");
                 });
 #pragma warning restore 612, 618
         }

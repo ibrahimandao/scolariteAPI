@@ -22,5 +22,13 @@ namespace APIStudent.DAO.Data
         public DbSet<Module> Modules { get; set; }
 
         public DbSet<FormationModule> FormationModules { get; set; }
+
+        public DbSet<Profil> Profils { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Utilisateur> Utilisateurs { get; set; }
+
+        public DbSet<ProfilRole> ProfilRoles { get; set; }
     }
 }

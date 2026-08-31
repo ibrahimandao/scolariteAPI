@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32922.545
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11801.241 oobstable
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentAPI", "StudentAPI\StudentAPI.csproj", "{55A18106-8063-4E7D-B680-9CA19C8F42A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentAPI", "StudentAPI\StudentAPI.csproj", "{55A18106-8063-4E7D-B680-9CA19C8F42A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIStudent.Model", "APIStudent.Model\APIStudent.Model.csproj", "{59D7D841-3FA8-4B68-A5E7-B7E372C01B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIStudent.Model", "APIStudent.Model\APIStudent.Model.csproj", "{59D7D841-3FA8-4B68-A5E7-B7E372C01B96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIStudent.DAO", "APIStudent.DAO\APIStudent.DAO.csproj", "{4F41A1DF-F19A-4A11-9038-F71D3D0A031B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIStudent.DAO", "APIStudent.DAO\APIStudent.DAO.csproj", "{4F41A1DF-F19A-4A11-9038-F71D3D0A031B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{1E9B6983-F48A-4BA5-94F5-E2163C2D9DD5}"
+	ProjectSection(SolutionItems) = preProject
+		code-agent.yml = code-agent.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
