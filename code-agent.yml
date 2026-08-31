@@ -102,13 +102,24 @@ jobs:
           import json
           import os
           import urllib.request
+          import urllib.error
 
           def read_file(path):
               try:
-                  with open(path, "r", encoding="utf-8", errors="replace") as f:
-                      return f.read()
-              except FileNotFoundError:
-                  return "(fichier absent)"
+                  with urllib.request.urlopen(request) as response:
+                      result = json.load(response)
+
+              except urllib.error.HTTPError as e:
+                  error_body = e.read().decode("utf-8", errors="replace")
+
+                  print("========================================")
+                  print("❌ OpenAI API ERROR")
+                  print("HTTP status:", e.code)
+                  print("Response:")
+                  print(error_body)
+                  print("========================================")
+
+              raise
 
           source_code = read_file("ai-context/source-code.txt")
           build_log = read_file("build.log")
