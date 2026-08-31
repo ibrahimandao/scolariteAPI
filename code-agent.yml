@@ -1,0 +1,217 @@
+name: AI Code Agent
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Tous les jours à 02:00 UTC
+    - cron: "0 2 * * *"
+
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  analyze:
+    name: AI Code Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Display environment
+        run: |
+          dotnet --info
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch: $GITHUB_REF_NAME"
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        id: build
+        continue-on-error: true
+        run: |
+          dotnet build \
+            --no-restore \
+            --configuration Release \
+            2>&1 | tee build.log
+
+      - name: Run tests
+        id: tests
+        continue-on-error: true
+        run: |
+          dotnet test \
+            --no-build \
+            --configuration Release \
+            --verbosity normal \
+            2>&1 | tee test.log
+
+      - name: Collect project information
+        run: |
+          echo "=== PROJECT FILES ===" > project-info.txt
+          find . \
+            -type f \
+            \( -name "*.cs" -o -name "*.csproj" -o -name "*.sln" \) \
+            -not -path "./.git/*" \
+            | sort >> project-info.txt
+
+          echo "" >> project-info.txt
+          echo "=== GIT STATUS ===" >> project-info.txt
+          git status --short >> project-info.txt
+
+          echo "" >> project-info.txt
+          echo "=== RECENT COMMITS ===" >> project-info.txt
+          git log -10 --oneline >> project-info.txt
+
+      - name: Prepare source code
+        run: |
+          mkdir -p ai-context
+
+          find . \
+            -type f \
+            -name "*.cs" \
+            -not -path "./.git/*" \
+            -not -path "./bin/*" \
+            -not -path "./obj/*" \
+            -print0 \
+            | sort -z \
+            | while IFS= read -r -d '' file; do
+                echo "===== FILE: $file ====="
+                cat "$file"
+                echo
+              done > ai-context/source-code.txt
+
+      - name: Analyze with OpenAI
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          def read_file(path):
+              try:
+                  with open(path, "r", encoding="utf-8", errors="replace") as f:
+                      return f.read()
+              except FileNotFoundError:
+                  return "(fichier absent)"
+
+          source_code = read_file("ai-context/source-code.txt")
+          build_log = read_file("build.log")
+          test_log = read_file("test.log")
+          project_info = read_file("project-info.txt")
+
+          prompt = f"""
+          Tu es un ingénieur logiciel senior spécialisé en C#, ASP.NET Core
+          et .NET 6.
+
+          Tu analyses le dépôt GitHub:
+          {os.environ.get("GITHUB_REPOSITORY")}
+
+          OBJECTIF:
+          Identifier uniquement les bugs réels ou très fortement probables.
+
+          IMPORTANT:
+          - Ne propose pas de simple refactoring.
+          - Ne propose pas d'amélioration esthétique.
+          - Ne considère pas une préférence de style comme un bug.
+          - Ne demande pas de modifier le comportement métier sans raison.
+          - Ne prétends jamais avoir exécuté du code que tu n'as pas exécuté.
+          - Base tes conclusions sur le code et les résultats fournis.
+
+          Pour chaque problème trouvé, indique:
+          1. Gravité: CRITICAL / HIGH / MEDIUM / LOW
+          2. Fichier
+          3. Ligne approximative si identifiable
+          4. Description
+          5. Cause probable
+          6. Impact
+          7. Correction recommandée
+          8. Niveau de confiance: HIGH / MEDIUM / LOW
+
+          Si aucun bug suffisamment crédible n'est trouvé, indique clairement:
+          "Aucun bug suffisamment crédible détecté."
+
+          === INFORMATIONS PROJET ===
+          {project_info}
+
+          === BUILD ===
+          {build_log}
+
+          === TESTS ===
+          {test_log}
+
+          === CODE SOURCE ===
+          {source_code}
+          """
+
+          payload = {
+              "model": "gpt-5.3-codex",
+              "reasoning": {
+                  "effort": "medium"
+              },
+              "input": [
+                  {
+                      "role": "system",
+                      "content": "Tu es un agent d'analyse de code extrêmement prudent."
+                  },
+                  {
+                      "role": "user",
+                      "content": prompt
+                  }
+              ]
+          }
+
+          data = json.dumps(payload).encode("utf-8")
+
+          request = urllib.request.Request(
+              "https://api.openai.com/v1/responses",
+              data=data,
+              headers={
+                  "Content-Type": "application/json",
+                  "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
+              },
+              method="POST"
+          )
+
+          with urllib.request.urlopen(request) as response:
+              result = json.load(response)
+
+          output = result.get("output_text", "")
+
+          if not output:
+              for item in result.get("output", []):
+                  for content in item.get("content", []):
+                      if content.get("type") == "output_text":
+                          output += content.get("text", "")
+
+          with open("ai-analysis.md", "w", encoding="utf-8") as f:
+              f.write("# 🤖 AI Code Analysis\n\n")
+              f.write(output)
+
+          print(output)
+          PY
+
+      - name: Upload AI analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-code-analysis
+          path: |
+            ai-analysis.md
+            build.log
+            test.log
+            project-info.txt
